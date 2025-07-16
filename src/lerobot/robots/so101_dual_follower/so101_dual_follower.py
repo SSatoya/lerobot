@@ -117,8 +117,8 @@ class SO101DualFollower(Robot):
     @property
     def is_connected(self) -> bool:
         """
-        Check if the arms is connected.
-        接続されているかどうかを確認する
+        Check if the devices is connected.
+        デバイスが接続されているかを確認する
         """
         return self.right_bus.is_connected and \
             self.left_bus.is_connected and \
@@ -131,7 +131,7 @@ class SO101DualFollower(Robot):
         接続時にはアームが休止位置にあると想定しており、
         トルクを安全に無効にしてキャリブレーションを実行できます。
         """
-        if self.is_connected:
+        if self.is_connected:  # すでに接続されている場合はエラーを投げる
             raise DeviceAlreadyConnectedError(f"{self} already connected")
 
         self.right_bus.connect()  # 右腕のモーターバスを接続
@@ -209,13 +209,13 @@ class SO101DualFollower(Robot):
         # self.left_bus.write_calibration(self.calibration)
 
         # キャリブレーションを保存する前に、右腕と左腕のキャリブレーションデータを分ける必要がある
-        # 右腕用のキャリブレーションデータを抽出
+        # Extract calibration data for the right arm / 右腕用のキャリブレーションデータを抽出
         right_calibration = {
             motor.replace("right_", ""): calib
             for motor, calib in self.calibration.items()
             if motor.startswith("right_")
         }
-        # 左腕用のキャリブレーションデータを抽出
+        # Extract calibration data for the left arm / 左腕用のキャリブレーションデータを抽出
         left_calibration = {
             motor.replace("left_", ""): calib
             for motor, calib in self.calibration.items()
