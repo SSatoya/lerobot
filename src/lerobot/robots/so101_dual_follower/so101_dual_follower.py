@@ -269,20 +269,24 @@ class SO101DualFollower(Robot):
         right_obs_dict = self.right_bus.sync_read("Present_Position")
         left_obs_dict = self.left_bus.sync_read("Present_Position")
 
-        right_obs_dict = {f"{motor}.pos": val for motor, val in right_obs_dict.items()}
-        left_obs_dict = {f"{motor}.pos": val for motor, val in left_obs_dict.items()}
+        # Add proper prefixes to match the expected feature names
+        right_obs_dict = {f"right_{motor}.pos": val for motor, val in right_obs_dict.items()}
+        left_obs_dict = {f"left_{motor}.pos": val for motor, val in left_obs_dict.items()}
 
         dt_ms = (time.perf_counter() - start) * 1e3
         logger.debug(f"{self} read state: {dt_ms:.1f}ms")
 
+        # Combine both arm observations
+        obs_dict = {**right_obs_dict, **left_obs_dict}
+
         # capture camera images
         for cam_key, cam in self.cameras.items():
             start = time.perf_counter()
-            right_obs_dict[cam_key] = cam.async_read()
+            obs_dict[cam_key] = cam.async_read()
             dt_ms = (time.perf_counter() - start) * 1e3
             logger.debug(f"{self} read {cam_key}: {dt_ms:.1f}ms")
 
-        return {**right_obs_dict, **left_obs_dict}
+        return obs_dict
     
     def send_action(self, action: dict[str, Any]) -> dict[str, Any]:
         """Command arm to move to a target joint configuration.
