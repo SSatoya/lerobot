@@ -28,6 +28,21 @@ python -m lerobot.teleoperate \
     --teleop.id=blue \
     --display_data=true
 ```
+
+if you use dual SO-101 arms, you can use the following command:
+```shell
+python -m lerobot.teleoperate \
+    --robot.type=so101_dual_follower \
+    --robot.right_port=/dev/tty.usbmodem58760431541 \
+    --robot.left_port=/dev/tty.usbmodem58760431551 \
+    --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 1920, height: 1080, fps: 30}}"
+    --robot.id=black \
+    --teleop.type=so101_dual_leader \
+    --teleop.right_port=/dev/tty.usbmodem58760431541 \
+    --teleop.left_port=/dev/tty.usbmodem58760431551 \
+    --teleop.id=blue \
+    --display_data=true
+```
 """
 
 import logging
@@ -48,6 +63,7 @@ from lerobot.robots import (  # noqa: F401
     make_robot_from_config,
     so100_follower,
     so101_follower,
+    so101_dual_follower,
 )
 from lerobot.teleoperators import (  # noqa: F401
     Teleoperator,
@@ -58,6 +74,7 @@ from lerobot.teleoperators import (  # noqa: F401
     make_teleoperator_from_config,
     so100_leader,
     so101_leader,
+    so101_dual_leader,
 )
 from lerobot.utils.robot_utils import busy_wait
 from lerobot.utils.utils import init_logging, move_cursor_up

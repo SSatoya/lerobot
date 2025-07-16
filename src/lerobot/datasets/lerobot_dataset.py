@@ -895,6 +895,9 @@ class LeRobotDataset(torch.utils.data.Dataset):
     def clear_episode_buffer(self) -> None:
         episode_index = self.episode_buffer["episode_index"]
         if self.image_writer is not None:
+            # Wait for all pending image writes to complete before deleting directories
+            self.image_writer.wait_until_done()
+            
             for cam_key in self.meta.camera_keys:
                 img_dir = self._get_image_file_path(
                     episode_index=episode_index, image_key=cam_key, frame_index=0
