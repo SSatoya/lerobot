@@ -33,6 +33,10 @@ def make_robot_from_config(config: RobotConfig) -> Robot:
         from .so100_follower import SO100FollowerEndEffector
 
         return SO100FollowerEndEffector(config)
+    elif config.type == "so101_6axis_follower":
+        from .so101_6axis_follower import SO1016AxisFollower
+
+        return SO1016AxisFollower(config)
     elif config.type == "so101_dual_follower":
         from .so101_dual_follower import SO101DualFollower
 
