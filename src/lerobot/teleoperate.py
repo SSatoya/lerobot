@@ -85,6 +85,7 @@ from lerobot.robots import (  # noqa: F401
     so100_follower,
     so101_follower,
     so101_dual_follower,
+    so101_6axis_follower,
 )
 from lerobot.teleoperators import (  # noqa: F401
     Teleoperator,
@@ -97,6 +98,7 @@ from lerobot.teleoperators import (  # noqa: F401
     so100_leader,
     so101_leader,
     so101_dual_leader,
+    so101_6axis_leader,
 )
 from lerobot.utils.robot_utils import busy_wait
 from lerobot.utils.utils import init_logging, move_cursor_up

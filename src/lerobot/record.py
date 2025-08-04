@@ -86,6 +86,7 @@ from lerobot.robots import (  # noqa: F401
     so100_follower,
     so101_follower,
     so101_dual_follower,
+    so101_6axis_follower,
 )
 from lerobot.teleoperators import (  # noqa: F401
     Teleoperator,
@@ -97,6 +98,7 @@ from lerobot.teleoperators import (  # noqa: F401
     so100_leader,
     so101_leader,
     so101_dual_leader,
+    so101_6axis_leader,
 )
 from lerobot.teleoperators.keyboard.teleop_keyboard import KeyboardTeleop
 from lerobot.utils.control_utils import (
@@ -211,7 +213,7 @@ def record_loop(
             (
                 t
                 for t in teleop
-                if isinstance(t, (so100_leader.SO100Leader, so101_leader.SO101Leader, koch_leader.KochLeader, so101_dual_leader.SO101DualLeader))
+                if isinstance(t, (so100_leader.SO100Leader, so101_leader.SO101Leader, koch_leader.KochLeader, so101_dual_leader.SO101DualLeader, so101_6axis_leader.SO1016AxisLeader))  # noqa: E501
             ),
             None,
         )
