@@ -139,7 +139,8 @@ def save_image(
     Saves a single image to disk using Pillow. Handles color conversion if necessary.
     """
     try:
-        img = Image.fromarray(img_array, mode="RGB")
+        # img = Image.fromarray(img_array, mode="RGB")
+        img = Image.fromarray(img_array)
 
         safe_identifier = str(camera_identifier).replace("/", "_").replace("\\", "_")
         filename_prefix = f"{camera_type.lower()}_{safe_identifier}"
